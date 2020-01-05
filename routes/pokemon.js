@@ -1,8 +1,8 @@
 const express = require('express');
-const { getPokemon } = require('../controllers/pokemon');
+const { getAllPokemon } = require('../controllers/pokemon');
 
 const router = express.Router();
 
-router.route('/').get(getPokemon);
+router.route('/').get(getAllPokemon);
 
 module.exports = router;

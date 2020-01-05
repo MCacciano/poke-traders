@@ -3,7 +3,7 @@ const asyncHandler = require('../middleware/asyncHandler');
 
 const Pokemon = require('../models/Pokemon');
 
-exports.getPokemon = asyncHandler(async (req, res, next) => {
+exports.getAllPokemon = asyncHandler(async (req, res, next) => {
   // const response = await pokeApi.get('/pokemon?limit=1000');
   const response = await Pokemon.find();
 
