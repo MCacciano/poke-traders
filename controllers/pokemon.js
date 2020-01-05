@@ -7,7 +7,7 @@ exports.getAllPokemon = asyncHandler(async (req, res, next) => {
   // const response = await pokeApi.get('/pokemon?limit=1000');
   const response = await Pokemon.find();
 
-  res.json(response);
+  res.status(200).json({ success: true, count: response.length, response });
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // ALL OF THIS WAS TO SEED THE DB WITH POKEMON
