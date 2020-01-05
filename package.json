@@ -11,6 +11,7 @@
   "author": "Michael Cacciano",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.0",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

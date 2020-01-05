@@ -10,6 +10,9 @@ dotenv.config({ path: './config/.config.env' });
 // connect DB
 connectDB();
 
+// route files
+const pokemon = require('./routes/pokemon');
+
 // init express
 const app = express();
 
@@ -21,11 +24,10 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-const PORT = process.env.PORT || 5000;
+// routes
+app.use('/api/v1/pokemon', pokemon);
 
-app.get('/', (req, res) => {
-  res.send('testing');
-});
+const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port: ${PORT}`));
 
