@@ -5,9 +5,9 @@ const Pokemon = require('../models/Pokemon');
 
 exports.getAllPokemon = asyncHandler(async (req, res, next) => {
   // const response = await pokeApi.get('/pokemon?limit=1000');
-  const response = await Pokemon.find();
+  const results = await Pokemon.find();
 
-  res.status(200).json({ success: true, count: response.length, response });
+  res.status(200).json({ success: true, count: results.length, results });
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // ALL OF THIS WAS TO SEED THE DB WITH POKEMON

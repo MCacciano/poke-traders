@@ -64,3 +64,27 @@ const sendTokenResponse = (user, statusCode, res) => {
       token
     });
 };
+
+// @desc        get current logged in user
+// @route       POST /api/v1/auth/me
+// @access      Private
+exports.getMe = asyncHanlder(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    data: user
+  });
+});
+
+function converToUserObject(userString) {
+  const userArr = userString.split('_');
+
+  const userObject = {
+    type: userArr[0],
+    lobbyId: userArr[1],
+    userId: userArr[2]
+  };
+
+  return userObject;
+}
