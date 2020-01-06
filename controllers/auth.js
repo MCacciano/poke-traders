@@ -1,5 +1,6 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHanlder = require('../middleware/asyncHandler');
+
 const User = require('../models/User');
 
 // @desc        Register user
@@ -48,7 +49,9 @@ const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken();
 
   const options = {
-    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
     httpsOnly: true
   };
 
@@ -76,15 +79,3 @@ exports.getMe = asyncHanlder(async (req, res, next) => {
     data: user
   });
 });
-
-function converToUserObject(userString) {
-  const userArr = userString.split('_');
-
-  const userObject = {
-    type: userArr[0],
-    lobbyId: userArr[1],
-    userId: userArr[2]
-  };
-
-  return userObject;
-}
