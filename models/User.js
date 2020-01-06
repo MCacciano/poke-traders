@@ -30,6 +30,11 @@ const UserSchema = new mongoose.Schema({
     enum: ['shield', 'sword'],
     default: 'shield',
     required: [true, 'Please choose which game you are actively playing']
+  },
+  pokedex: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Pokedex',
+    require: true
   }
 });
 
