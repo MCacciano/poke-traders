@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const Pokemon = require('../models/Pokemon');
+const Pokedex = require('../models/Pokedex');
+
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -11,7 +14,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add an email'],
     unique: true,
-    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please add a valid email']
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      'Please add a valid email'
+    ]
   },
   password: {
     type: String,
@@ -30,19 +36,33 @@ const UserSchema = new mongoose.Schema({
     enum: ['shield', 'sword'],
     default: 'shield',
     required: [true, 'Please choose which game you are actively playing']
+  },
+  pokedex: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Pokedex',
+    require: true
   }
 });
 
 // Encrypt password using bcrypt
 UserSchema.pre('save', async function(next) {
   const salt = await bcrypt.genSalt(10);
+  const pokemon = await Pokemon.find();
 
   this.password = await bcrypt.hash(this.password, salt);
+  if (!this.pokedex) {
+    this.pokedex = await Pokedex.create({
+      trainer: this,
+      pokemon
+    });
+  }
 });
 
 // Sign JWT and return
 UserSchema.methods.getSignedJwtToken = function() {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE
+  });
 };
 
 // match user entered password to hashed password in databse

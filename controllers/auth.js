@@ -1,5 +1,6 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHanlder = require('../middleware/asyncHandler');
+
 const User = require('../models/User');
 
 // @desc        Register user
@@ -48,7 +49,9 @@ const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken();
 
   const options = {
-    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
     httpsOnly: true
   };
 
@@ -64,3 +67,15 @@ const sendTokenResponse = (user, statusCode, res) => {
       token
     });
 };
+
+// @desc        get current logged in user
+// @route       POST /api/v1/auth/me
+// @access      Private
+exports.getMe = asyncHanlder(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    data: user
+  });
+});
