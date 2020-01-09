@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema({
   pokedex: {
     type: mongoose.Schema.ObjectId,
     ref: 'Pokedex',
-    require: true
+    required: true
   }
 });
 

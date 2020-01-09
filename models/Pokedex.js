@@ -12,30 +12,9 @@ const PokedexSchema = new mongoose.Schema({
   },
   pokemon: [
     {
-      caught: {
-        type: Boolean,
-        default: false
-      },
-      owned: {
-        type: Boolean,
-        default: false
-      },
-      willingToTrade: {
-        type: Boolean,
-        default: false
-      },
-      name: {
-        type: String,
-        required: true
-      },
-      url: {
-        type: String,
-        required: false
-      },
-      imageUrl: {
-        type: String,
-        require: false
-      }
+      type: mongoose.Schema.ObjectId,
+      ref: 'Pokemon',
+      required: true
     }
   ]
 });

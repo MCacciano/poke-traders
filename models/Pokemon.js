@@ -2,19 +2,30 @@ const mongoose = require('mongoose');
 
 const PokemonSchema = mongoose.Schema({
   name: {
-    type: String
+    type: String,
+    required: true
+  },
+  caught: {
+    type: Boolean,
+    required: true,
+    default: false
   },
   url: {
-    type: String
+    type: String,
+    required: false
   },
   imageUrl: {
-    type: String
+    type: String,
+    required: false
   },
   pokeID: {
     type: String,
     requred: false
   },
-  pokeApiUrl: String
+  pokeApiUrl: {
+    type: String,
+    required: false
+  }
 });
 
 module.exports = mongoose.model('Pokemon', PokemonSchema);
